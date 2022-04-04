@@ -1,7 +1,5 @@
 const cityFormEl = document.querySelector('#city-form')
 const cityInputEl = document.querySelector('#city')
-const cityContainerEl = document.querySelector('#cities-container')
-const citySearchTerm = document.querySelector('#city-search-term')
 
  getCities = (city) => {
     const apiUrl = 'https://api.openweathermap.org/data/2.5/weather?q=' + city + '&appid=61f172bd2a4837729bfd40bf2e1005cb&units=imperial'

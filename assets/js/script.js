@@ -6,6 +6,21 @@ const cityInputEl = document.querySelector('#city')
     fetch(apiUrl).then(function(response) {
         response.json().then(function(data) {
             console.log(data);
+            //card elements
+            const cardTitle = $('<h3>').addClass('card-title').text(data.name);
+            const icon = $("<img>").attr("src", "https://openweathermap.org/img/w/" + data.weather[0].icon + ".png");
+            const card = $('<div>').addClass('card')
+            const cardBody = $('<div>').addClass('card-body');
+        
+        // weather elements
+            const temp = $("<p>").addClass("card-text").text("Temperature: " + data.main.temp + "°F");
+            const humidity = $("<p>").addClass("card-text").text("Humidity: " + data.main.humidity + "%");
+            const windSpeed = $("<p>").addClass("card-text").text("Wind Speed: " + data.wind.speed + " MPH");
+
+            cardTitle.append(icon)
+            cardBody.append(cardTitle, temp, humidity, windSpeed);
+            card.append(cardBody);
+            $('#cityName').append(card);
         })
     })
 } 

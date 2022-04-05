@@ -1,9 +1,10 @@
 const cityFormEl = document.querySelector('#city-form')
 const cityInputEl = document.querySelector('#city')
 
- getCities = (city) => {
-    const apiUrl = 'https://api.openweathermap.org/data/2.5/weather?q=' + city + '&appid=61f172bd2a4837729bfd40bf2e1005cb&units=imperial'
-    fetch(apiUrl).then(function(response) {
+getCities = (city) => {
+    const singleApiUrl = 'https://api.openweathermap.org/data/2.5/weather?q=' + city + '&appid=61f172bd2a4837729bfd40bf2e1005cb&units=imperial'
+    const fiveDayApiUrl ='https://api.openweathermap.org/data/2.5/forecast?q=' + city + '&appid=61f172bd2a4837729bfd40bf2e1005cb&units=imperial' 
+    fetch(singleApiUrl).then(function(response) {
         response.json().then(function(data) {
             console.log(data);
             //card elements
@@ -25,6 +26,31 @@ const cityInputEl = document.querySelector('#city')
     })
 } 
 
+getFiveDay = (city) => {
+    const fiveDayApiUrl ='https://api.openweathermap.org/data/2.5/forecast?q=' + city + '&appid=61f172bd2a4837729bfd40bf2e1005cb&units=imperial' 
+    fetch(fiveDayApiUrl).then(function(response) {
+        response.json().then(function(data) {
+            console.log(data);
+            $('#fiveDay').html("<h5>5-Day Forecast:</h5>").append("<div class=\"row\">");
+           
+            for(let i = 0;i<5;i++) {
+                const fiveCardTitle = $('<h3>').addClass('card-title').text(data.name);
+                const fiveIcon = $("<img>").attr("src", "https://openweathermap.org/img/w/" + data.list[i].weather[0].icon + ".png");
+                const fiveCard = $('<div>').addClass('card')
+                const fiveCardBody = $('<div>').addClass('card-body');
+        
+        
+                const fiveTemp = $("<p>").addClass("card-text").text("Temperature: " + data.list[i].main.temp + "°F");
+                const fiveHumidity = $("<p>").addClass("card-text").text("Humidity: " + data.list[i].main.humidity + "%");
+                const fiveWindSpeed = $("<p>").addClass("card-text").text("Wind Speed: " + data.list[i].wind.speed + " MPH");
+                const fiveColumn = $('<div>').addClass('card-mb-3 col-md-1 row no-gutters')
+
+                fiveColumn.append(fiveCard.append(fiveCardBody.append(fiveCardTitle,fiveIcon,fiveTemp,fiveHumidity,fiveWindSpeed)));
+                $('#fiveDay .row').append(fiveColumn);
+            }
+        })
+    })
+} 
 
 formSubmitHandler = (event) => {
     event.preventDefault();
@@ -33,6 +59,7 @@ formSubmitHandler = (event) => {
 
     if(city) {
         getCities(city)
+        getFiveDay(city)
         cityInputEl.value = '';
     } else {
         alert('Please Enter the Name of a City!')

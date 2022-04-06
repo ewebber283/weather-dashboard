@@ -34,7 +34,7 @@ getFiveDay = (city) => {
             $('#fiveDay').html("<h5>5-Day Forecast:</h5>").append("<div class=\"row\">");
            
             for(let i = 0;i<5;i++) {
-                const fiveCardTitle = $('<h3>').addClass('card-title').text(data.name);
+                const fiveCardTitle = $('<h3>').addClass('card-title').text(data.city.name);
                 const fiveIcon = $("<img>").attr("src", "https://openweathermap.org/img/w/" + data.list[i].weather[0].icon + ".png");
                 const fiveCard = $('<div>').addClass('card')
                 const fiveCardBody = $('<div>').addClass('card-body');
@@ -43,7 +43,7 @@ getFiveDay = (city) => {
                 const fiveTemp = $("<p>").addClass("card-text").text("Temperature: " + data.list[i].main.temp + "°F");
                 const fiveHumidity = $("<p>").addClass("card-text").text("Humidity: " + data.list[i].main.humidity + "%");
                 const fiveWindSpeed = $("<p>").addClass("card-text").text("Wind Speed: " + data.list[i].wind.speed + " MPH");
-                const fiveColumn = $('<div>').addClass('card-mb-3 col-md-1 row no-gutters')
+                const fiveColumn = $('<div>').addClass('')
 
                 fiveColumn.append(fiveCard.append(fiveCardBody.append(fiveCardTitle,fiveIcon,fiveTemp,fiveHumidity,fiveWindSpeed)));
                 $('#fiveDay .row').append(fiveColumn);
